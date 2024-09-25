@@ -1,0 +1,11 @@
+docker run \
+       --rm \
+       --env POSTGRES_DB=liquibaseexample \
+       --env POSTGRES_USER=liquibase \
+       --env POSTGRES_PASSWORD=Pass1234 \
+       -p 5432:5432 \
+       postgres:alpine
+
+CREATE SCHEMA IF NOT EXISTS public;
+GRANT USAGE, CREATE ON SCHEMA public TO liquibase;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO liquibase;

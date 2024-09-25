@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="ilya_minyukhin" id="2020-04-19-test-add-books-postgres">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+            <not>
+                <tableExists tableName="books"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="books">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="pk_books"/>
+            </column>
+            <column name="name" type="varchar(512)"/>
+            <column name="authors" type="jsonb"/>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_books_user_id"
+                             referencedColumnNames="id"
+                             referencedTableName="users"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ilya_minyukhin" id="2020-04-19-test-add-books-h2">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="h2"/>
+            <not>
+                <tableExists tableName="books"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="books">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"
+                             primaryKeyName="pk_books"/>
+            </column>
+            <column name="name" type="varchar(512)"/>
+            <column name="authors" type="json"/>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_books_user_id"
+                             referencedColumnNames="id"
+                             referencedTableName="users"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
